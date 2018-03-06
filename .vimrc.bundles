@@ -1,35 +1,38 @@
-" Vundle设置
-set nocompatible              " be iMproved, required
-filetype off                  " required
+"""""""""""Vundle设置"""""""""""
+set nocompatible             
+filetype off    
 
-" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
+Bundle 'VundleVim/Vundle.vim'
 
 Bundle 'scrooloose/nerdtree'
-" NERDTree 配置
-map <C-e> :NERDTreeToggle<CR>
-map <leader>e :NERDTreeFind<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-"let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-"let NERDTreeChDirMode=0
-"let NERDTreeQuitOnOpen=0
-"let NERDTreeMouseMode=2
-"let NERDTreeShowHidden=1
-"let NERDTreeKeepTreeInNewTab=1
-"let g:nerdtree_tabs_open_on_gui_startup=0
-"let g:NERDShutUp=1
+Bundle 'Xuyuanp/nerdtree-git-plugin'
+
+Bundle 'scrooloose/nerdcommenter'
+
+Bundle 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Bundle 'junegunn/fzf.vim' 
+
+Bundle 'mileszs/ack.vim'
+
+Bundle 'tpope/vim-surround'
+
+Bundle 'SirVer/ultisnips'
+
+Bundle 'tpope/vim-repeat'
+
+Bundle 'vim-airline/vim-airline'
+
+Bundle 'vim-scripts/ctags.vim'
+
+Bundle 'majutsushi/tagbar'
+
+Bundle 'easymotion/vim-easymotion'
+
+Bundle 'altercation/vim-colors-solarized'
 
 Bundle 'fatih/vim-go'
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -44,24 +47,10 @@ Bundle 'nsf/gocode', {'rtp': 'vim/'}
 filetype plugin on
 imap <C-a> <C-x><C-o>
 
-Bundle 'SirVer/ultisnips'
 
-Bundle 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_map = '<c-p>'
 
-Bundle 'tpope/vim-surround'
 
-Bundle 'vim-airline/vim-airline'
 
-Bundle 'vim-scripts/ctags.vim'
-Bundle 'majutsushi/tagbar'
-nnoremap <silent> tb :TagbarToggle<CR>
-
-Bundle 'Lokaltog/vim-easymotion'
-
-Bundle 'scrooloose/nerdcommenter'
-
-Bundle 'altercation/vim-colors-solarized'
 let g:NERDSpaceDelims=1
 
 Bundle 'godlygeek/tabular'
@@ -100,20 +89,122 @@ let g:indent_guides_guide_size = 1
 nnoremap <silent> eg    :IndentGuidesEnable<CR>
 nnoremap <silent> dg    :IndentGuidesDisable<CR>
 
+Bundle 'tpope/vim-fugitive'
+
 " ...
+call vundle#end()            
+filetype plugin indent on     
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-" filetype plugin on
 
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just
-" :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"""""""""""NERDTree""""""""""""
+" 切换显示NERDtree
+map <C-e> :NERDTreeToggle<CR>
 
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" 在NERDtree中找到当前文件的位置
+map <leader>e :NERDTreeFind<CR>
+
+" 当最后只剩nerdtree目录时，直接关闭vim
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" nerdtree需要被忽略的文件
+let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+
+" 设置为1时，显示nerdtree文件层次的编号.
+let NERDTreeShowLineNumbers=1
+
+
+"""""""""""nerdtree-git-plugin"""""""""""
+" nerdtree 目录的 git 状态相关符号
+let g:NERDTreeIndicatorMapCustom = {
+	\ "Modified"  : "✹",
+	\ "Staged"    : "✚",
+	\ "Untracked" : "✭",
+	\ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+
+"""""""""""nerdcommenter"""""""""""
+" 注释的时候自动加个空格, 强迫症必配
+let g:NERDSpaceDelims = 1
+ 
+
+"""""""""""fzf.vim"""""""""""
+" 映射 :Files 命令到 Ctrl+p
+nnoremap <silent> <C-p> :Files<CR>
+
+
+"""""""""""ack.vim"""""""""""
+" 映射 :Ack 命令到 <leader>a
+map <leader>a :Ack<space>
+
+
+"""""""""""vim-airline"""""""""""
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = '❮'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+
+" 是否打开tabline
+let g:airline#extensions#tabline#enabled = 1
+
+" 这个是安装字体后 必须设置此项"
+let g:airline_powerline_fonts = 1
+
+" 设置切换Buffer快捷键"
+ nnoremap <leader><left> :bp<CR>
+ nnoremap <leader><right> :bn<CR>
+
+ 
+"""""""""""tagbar"""""""""""
+nnoremap <silent> tb :TagbarToggle<CR>
+
+" gotags 配置
+let g:tagbar_type_go = {
+    \ 'ctagstype': 'go',
+    \ 'kinds' : [
+        \'p:package',
+        \'f:function',
+        \'v:variables',
+        \'t:type',
+        \'c:const'
+    \]
+\}
+
+
+"""""""""""vim-easymotion"""""""""""
+" 前缀映射
+map <leader> <Plug>(easymotion-prefix)
+
+let g:EasyMotion_smartcase = 1
+
+" map <Leader>l <Plug>(easymotion-lineforward)
+" map <Leader>j <Plug>(easymotion-j)
+" map <Leader>k <Plug>(easymotion-k)
+" map <Leader>h <Plug>(easymotion-linebackward)
+
+
+"""""""""""vim-colors-solarized"""""""""""
+" solarized配色方案设置
+syntax enable
+
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+
+set background=dark
+
+colorscheme solarized
+
