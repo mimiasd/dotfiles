@@ -15,12 +15,33 @@ set backspace=indent,eol,start
 
 " 设置前缀
 nmap <space> <leader>
-  
-" 个性设置
+
+" 窗口切换  
+nnoremap <leader><left>  <c-w>h  
+nnoremap <leader><right> <c-w>l  
+nnoremap <leader><down>  <c-w>j  
+nnoremap <leader><up>    <c-w>k   
+" 开启语法高亮功能
+syntax enable
+" 允许指定语法高亮配色方案替换默认方案
 syntax on
+" 开启行号显示
 set nu
+" 命令行显示输入的命令
+set showcmd         
+" 命令行的高度
+set cmdheight=2
+" 命令行显示vim当前模式
+set showmode
+
+" 高亮显示当前行/列
 set cursorline
-highlight CursorLine cterm=NONE ctermbg=grey ctermfg=NONE 
+" set cursorcolumn
+
+" 配置高亮行，see :help highlight
+highlight CursorLine   cterm=NONE ctermbg=235 guibg=NONE guifg=NONE
+" highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+
 set showmatch
 set wildmenu
 set wildmode=list:longest,full
@@ -34,20 +55,6 @@ nnoremap <silent> xr    :set norelativenumber<CR>
 " 粘贴缩进
 nnoremap <silent> sp    :set paste<CR>
 nnoremap <silent> np    :set nopaste<CR>
-
-
-" 括号自动补全
-"inoremap ' ''<ESC>i
-inoremap " ""<ESC>i
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap < <><ESC>i
-inoremap { {<CR>}<ESC>O
-inoremap <Leader>{ {}<ESC>i
-
-" 自动补全css，html代码
-autocmd FileType css set omnifunc=csscomplete
-autocmd FileType html set omnifunc=htmlcomplete
 
 " 使鼠标可用，并在输入时自动隐藏鼠标
 set mouse=a
