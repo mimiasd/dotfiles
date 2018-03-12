@@ -52,6 +52,10 @@ Bundle 'scrooloose/syntastic'
 
 Bundle 'mhinz/vim-startify'
 
+Bundle 'godlygeek/tabular'
+
+Bundle 'suan/vim-instant-markdown'
+
 Bundle 'tpope/vim-fugitive'
 
 " ...
@@ -126,8 +130,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 " 设置切换Buffer快捷键"
- nnoremap <leader><left> :bp<CR>
- nnoremap <leader><right> :bn<CR>
+ nnoremap <C-left> :bp<CR>
+ nnoremap <C-right> :bn<CR>
 
  
 """""""""""tagbar"""""""""""
@@ -135,15 +139,32 @@ nnoremap <silent> tb :TagbarToggle<CR>
 
 " gotags 配置
 let g:tagbar_type_go = {
-    \ 'ctagstype': 'go',
-    \ 'kinds' : [
-        \'p:package',
-        \'f:function',
-        \'v:variables',
-        \'t:type',
-        \'c:const'
-    \]
-\}
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
 
 
 """""""""""vim-easymotion"""""""""""
@@ -266,3 +287,8 @@ endfunction
 nnoremap <Leader>s :call ToggleErrors()<cr>
 " nnoremap <Leader>sn :lnext<cr>
 " nnoremap <Leader>sp :lprevious<cr>
+
+
+"""""""""""vim-instant-markdown"""""""""""
+let g:instant_markdown_autostart = 0
+nnoremap <leader><leader>m :InstantMarkdownPreview<cr>

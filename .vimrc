@@ -21,6 +21,10 @@ nnoremap <leader><left>  <c-w>h
 nnoremap <leader><right> <c-w>l  
 nnoremap <leader><down>  <c-w>j  
 nnoremap <leader><up>    <c-w>k   
+" 句首，句末
+nnoremap <S-left> ^
+nnoremap <S-right> $
+
 " 开启语法高亮功能
 syntax enable
 " 允许指定语法高亮配色方案替换默认方案
