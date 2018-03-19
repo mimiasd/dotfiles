@@ -69,3 +69,17 @@ set mousehide
 set tabstop=4
 set shiftwidth=4
 nnoremap <silent> st    :set expandtab<CR>
+
+" star dictionary
+function! Mydict()
+  let expl=system('sdcv -n ' .
+        \  expand("<cword>"))
+  windo if
+        \ expand("%")=="diCt-tmp" |
+        \ q!|endif
+  25vsp diCt-tmp
+  setlocal buftype=nofile bufhidden=hide noswapfile
+  1s/^/\=expl/
+  1
+endfunction
+nmap <leader>q  :call Mydict()<CR>
