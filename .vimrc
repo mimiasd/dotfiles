@@ -83,3 +83,8 @@ function! Mydict()
   1
 endfunction
 nmap <leader>q  :call Mydict()<CR>
+
+nmap <M-up>  :resize +3<CR>
+nmap <M-down>  :resize -3<CR>
+nmap <M-left>  :vertical resize -3<CR>
+nmap <M-right>  :vertical resize +3<CR>
